@@ -256,7 +256,7 @@ const FBC={apiKey:"AIzaSyADc21S2mCe-Oi4CPK7Y7Y3PywH2ABgDA4",authDomain:"gestion-
 const LB="gp_lastbk";
 function resolveRole(u){const ref=DB.collection("config").doc("acceso"),em=(u.email||"").toLowerCase();
  return ref.get().then(d=>{if(d.exists){RO=em!==String(d.data().admin||"").toLowerCase();return}
-  return ref.set({admin:em}).then(()=>{RO=false}).catch(()=>{RO=true})}).catch(()=>{RO=true})}
+  return ref.set({admin:em}).then(()=>{RO=false}).catch(()=>{RO=true})}).catch(e=>{RO=true;toast("No se pudo verificar tu rol ("+(e.code||e.message)+"). Publica en Firestore la regla de la colección config.",1)})}
 function bkReminder(){try{const l=+localStorage.getItem(LB)||0;if(Date.now()-l>14*864e5)toast("Recuerda descargar un respaldo (Datos → Descargar respaldo). "+(l?"El último fue hace más de 14 días.":"Aún no has hecho ninguno."),1)}catch(e){}}
 let DB=null,CU=null,CL={},UNS=null,FIRST=true,RO=false,CFGU=null;
 let CE="";
