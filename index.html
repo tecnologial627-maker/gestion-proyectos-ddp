@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gestión de Proyectos DDP</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<title>Gestión de Proyectos</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -45,7 +45,7 @@ td{padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}td sm
 .bar{height:6px;background:var(--bar);border-radius:5px;overflow:hidden;margin-top:4px}.bar i{display:block;height:100%;background:var(--pr)}.bar.f2 i{background:var(--ok)}
 .ic{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:8px;color:var(--mu);padding:0;background:none;border:0;cursor:pointer}.ic:hover{background:var(--bg);color:var(--pr)}.ic[data-d]:hover{color:var(--su);background:var(--sub)}
 .e{text-align:center;color:var(--mu);padding:28px}
-.dn{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:14px}.dw{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.lz{flex:1;min-width:150px}
+.dn{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:14px}.dw{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.lz{flex:1;min-width:150px;max-height:150px;overflow-y:auto;padding-right:4px}
 .lr{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 6px;border-radius:6px}.lr[data-p],.lr[data-t]{cursor:pointer}.lr:hover{background:var(--bg)}.lr i{width:10px;height:10px;border-radius:3px;flex:none}.lr span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pg{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px;font-size:13px;color:var(--mu)}
 .ts{top:auto;right:auto;margin:0;border:0;position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:#111827;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw;display:flex;gap:12px;align-items:center}.ts.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.ts.er{background:#b91c1c}.ts button{background:none;border:0;color:#93c5fd;font-weight:700;cursor:pointer}
@@ -69,7 +69,7 @@ input[type=range]{height:34px}.ft{position:sticky;bottom:-18px;background:var(--
 tr{border:1px solid var(--bd);border-radius:12px;margin:0 0 10px;padding:6px 10px;background:var(--card)}
 td,td:nth-child(3),td:nth-child(7),td:nth-child(9){display:flex!important;justify-content:space-between;gap:12px;border:0;padding:6px 0;text-align:right}
 td::before{content:attr(data-l);color:var(--mu);font-size:12px;text-align:left;flex:none}td small{display:inline}td:last-child{justify-content:flex-end}td:last-child::before{content:none}}
-#dv{width:min(1000px,96vw);padding:0}
+#dv{width:min(1000px,96vw);padding:0}#rp::backdrop{background:rgba(0,0,0,.7)}
 .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 24px 14px;border-bottom:1px solid var(--bd)}
 .cr{color:var(--mu);font-size:13px;margin-bottom:4px}.dtt{margin:0;font-size:20px;line-height:1.3}
 .dr{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}.dr .s{font-size:13px;padding:4px 12px}
@@ -85,6 +85,7 @@ td:nth-child(5){white-space:nowrap}
 @media(max-width:900px){.dbody{grid-template-columns:1fr}.dc1{border-right:0}.dh,.dc1,.dc2,.dft{padding-left:16px;padding-right:16px}}
 #lo{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}#lo .c{width:min(400px,100%);padding:26px}#lo input{width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:11px;font-size:16px}#lo label{display:block;font-size:12px;color:var(--mu);margin:10px 0 3px}
 @media print{header>div:last-child,.f,.pg,.ic,.ts,th:last-child,td:last-child{display:none!important}body{background:#fff}.dn{grid-template-columns:repeat(3,1fr)}table{min-width:0;font-size:11px}}
+body.ro #nw,body.ro #btnApply,body.ro #im,body.ro #rs,body.ro #up,body.ro #da,body.ro #cfg,body.ro .ic,body.ro [data-e],body.ro [data-d]{display:none!important}
 </style>
 </head>
 <body>
@@ -92,7 +93,7 @@ td:nth-child(5){white-space:nowrap}
 <div id="ld"><div><b>Procesando archivo…</b></div></div>
 <div class="w">
 <header>
- <div class="hd"><span class="lg" data-i="building"></span><div><h1>Gestión de Proyectos</h1><p>Portafolio institucional de obras y desarrollo provincial · República Dominicana</p></div></div>
+ <div class="hd"><span class="lg" data-i="building"></span><div><h1>Gestión de Proyectos</h1><p>Portafolio institucional de obras</p></div></div>
  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
   <span id="sy"></span>
   <button class="b ap" id="btnApply" data-i="save">Aplicar cambios</button>
@@ -104,6 +105,7 @@ td:nth-child(5){white-space:nowrap}
    <button id="pr" data-i="folder">Imprimir informe</button>
    <button id="up" data-i="upload">Subir todo a la nube ahora</button>
    <button id="so" data-i="upload" style="display:none">Cerrar sesión</button>
+   <button id="cfg" data-i="edit">Configuración institucional</button>
    <button id="da" class="dg" data-i="trash">Borrar todo el portafolio</button>
   </div></details>
   <button class="b p" id="nw" data-i="plus">Nuevo proyecto</button>
@@ -138,6 +140,49 @@ td:nth-child(5){white-space:nowrap}
 </form></dialog>
 <dialog id="dv"><div id="dvb"></div></dialog>
 
+<dialog id="dc" style="width:min(520px,96vw)">
+ <h3 style="margin:0 0 4px;font-size:17px">⚙️ Configuración institucional</h3>
+ <p style="color:var(--mu);font-size:13px;margin:0 0 16px">Esta información se guarda en la nube y la ven todos los usuarios.</p>
+ <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:3px">Nombre de la institución</label>
+ <input id="cfg-n" placeholder="Ej: Dirección de Desarrollo Provincial" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
+ <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:3px">Subtítulo / descripción</label>
+ <input id="cfg-s" placeholder="Ej: Portafolio institucional de obras · República Dominicana" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
+ <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:6px">Logo de la institución <span style="font-weight:400">(PNG, JPG o SVG — se guarda en la nube)</span></label>
+ <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px">
+  <div id="cfg-lp" style="width:52px;height:52px;border-radius:12px;background:var(--pr);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none">
+   <span id="cfg-li" style="color:var(--prt);font-size:22px">🏛️</span>
+  </div>
+  <div style="flex:1">
+   <button class="b" id="cfg-lb" style="width:100%;justify-content:center">Subir imagen del logo</button>
+   <input type="file" id="cfg-lf" accept="image/*" hidden>
+   <p style="font-size:11px;color:var(--mu);margin:5px 0 0">Recomendado: imagen cuadrada, fondo transparente o de color. Máx 200 KB.</p>
+  </div>
+ </div>
+ <label style="display:block;font-size:12px;color:var(--mu);margin:10px 0 3px">Color principal (fondo del logo)</label>
+ <div style="display:flex;gap:10px;align-items:center">
+  <input type="color" id="cfg-c" value="#1d4ed8" style="width:44px;height:36px;border:1px solid var(--bd);border-radius:8px;padding:2px;cursor:pointer;background:var(--card)">
+  <span style="font-size:12px;color:var(--mu)">Se usa cuando no hay logo cargado</span>
+ </div>
+ <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+  <button class="b" id="cfg-x">Cancelar</button>
+  <button class="b" id="cfg-r" style="color:var(--su)">Restablecer</button>
+  <button class="b p" id="cfg-g">Guardar configuración</button>
+ </div>
+</dialog>
+
+<dialog id="rp" style="width:100vw;max-width:100vw;height:100vh;max-height:100vh;margin:0;padding:0;border:0;border-radius:0;background:#1e2a3a">
+ <div style="display:flex;flex-direction:column;height:100%">
+  <div style="display:flex;align-items:center;justify-content:space-between;background:#0f2d6b;color:#fff;padding:10px 20px;flex:none;gap:12px">
+   <span style="font-weight:600;font-size:14px">📄 Informe de Gestión de Proyectos</span>
+   <div style="display:flex;gap:10px">
+    <button id="ip" style="background:#fff;color:#0f2d6b;border:0;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">🖨️ Imprimir / Guardar PDF</button>
+    <button id="ic" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer">✕ Cerrar</button>
+   </div>
+  </div>
+  <iframe id="rf" style="flex:1;border:0;width:100%;background:#fff"></iframe>
+ </div>
+</dialog>
+
 <script>
 const REG={"Gran Santo Domingo":["Distrito Nacional","Santo Domingo","Santo Domingo Este","Santo Domingo Oeste","Santo Domingo Norte"],
 "Norte (Cibao)":["Santiago","Puerto Plata","La Vega","Espaillat","Duarte","Hermanas Mirabal","María Trinidad Sánchez","Samaná","Monseñor Nouel","Sánchez Ramírez","Valverde","Monte Cristi","Santiago Rodríguez","Dajabón"],
@@ -145,8 +190,8 @@ const REG={"Gran Santo Domingo":["Distrito Nacional","Santo Domingo","Santo Domi
 "Sur":["Azua","San Juan","Barahona","Bahoruco","Independencia","Pedernales","Peravia","San Cristóbal","San José de Ocoa","Elías Piña"],
 "Sin región":["Sin asignar"]};
 const ST=["Planificación","En ejecución","Finalizado","Suspendido"],R2={};
-const TP=["Seguridad ciudadana","Deportiva","Eléctrica","Vial","Comunitaria","Educativa","Salud","Agua y saneamiento","Comercial","Emergencias","Otra"];
-const CT=["#1d4ed8","#0891b2","#16a34a","#d97706","#7c3aed","#dc2626","#db2777","#0d9488","#65a30d","#ea580c","#94a3b8"];
+const TP=["Proyectos Comunitarios","Proyectos Eclesiásticos","Proyectos Habitacionales","Proyectos Deportivos","Proyectos Viales","Proyectos Seguridad Ciudadana","Proyectos Comerciales","Otros"];
+const CT=["#1d4ed8","#0891b2","#16a34a","#d97706","#7c3aed","#dc2626","#db2777","#0d9488","#65a30d","#ea580c","#a855f7","#f59e0b","#94a3b8"];
 Object.keys(REG).forEach(r=>REG[r].forEach(p=>R2[p]=r));
 const $=i=>document.getElementById(i);
 const nz=s=>String(s==null?"":s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
@@ -154,10 +199,30 @@ const PL={};Object.values(REG).flat().forEach(p=>PL[nz(p)]=p);
 Object.assign(PL,{"azua de compostela":"Azua","san juan de la maguana":"San Juan","salcedo":"Hermanas Mirabal","montecristi":"Monte Cristi","higuey":"La Altagracia","santiago de los caballeros":"Santiago"});
 const PK=Object.keys(PL).sort((a,b)=>b.length-a.length);
 function cleanProv(s){const t=nz(s).replace(/^provincia\s*:?\s*/,"");if(PL[t])return PL[t];const k=PK.find(k=>t.indexOf(k)>-1);return k?PL[k]:"Sin asignar"}
-const TR=[[/DESTACAMENTO|POLIC|CUARTEL/,0],[/BOMBERO/,9],[/DEPORT|CANCHA|ESTADIO|CLUB|BEISBOL/,1],[/PUENTE|CARRETERA|CALLE|CAMINO|VIAL|ASFALT|AVENIDA|ACERA/,3],[/ELECTR|ALUMBRADO|LUMINARIA|SUBESTACION/,2],[/ESCUELA|LICEO|COLEGIO|AULA|ESTANCIA/,5],[/HOSPITAL|CLINICA|SALUD|DISPENSARIO/,6],[/ACUEDUCTO|AGUA|ALCANTARILL|DRENAJE|CANADA|POZO/,7],[/MERCADO|PLAZA|COMERCIAL/,8],[/FUNERARIA|COMUNAL|IGLESIA|CAPILLA|PARQUE|MULTIUSO/,4]];
-const inf=n=>{const u=nz(n).toUpperCase(),r=TR.find(r=>r[0].test(u));return r?TP[r[1]]:"Otra"};
+const TR=[
+ [/DESTACAMENTO|CUARTEL|POLICIA|POLIC\b|CARCEL|PRISION|PENAL|GUARDIA|CASETA\sPOL/,"Proyectos Seguridad Ciudadana"],
+ [/CANCHA|ESTADIO|BALONCESTO|BEISBOL|FUTBOL|DEPORT|GIMNASIO|PISCINA|ATLETIS|PELOTA|SOFTBOL|CLUB\sDEP/,"Proyectos Deportivos"],
+ [/VIVIENDA|HABITACIONAL|RESIDENCIAL|APARTAMENTO|EDIFICIO\sDE\sAP|CASA\sDE\sINTERES|TECHO\sPROP|URBANIZACION|BARRIO\sREG|COMPLEJO\sHABIT/,"Proyectos Habitacionales"],
+ [/CARRETERA|PUENTE|CAMINO\s|CALZADA|VIAL\b|ASFALT|AVENIDA|ACERA|CONTENE|BORDE\sDE\sCALL|AMPLIACION\sDE\sCALL|CALLE\s|TRAMO\s/,"Proyectos Viales"],
+ [/MERCADO|PLAZA\sCOM|CENTRO\sCOM|MALL|COMERCIAL\b/,"Proyectos Comerciales"],
+ [/IGLESIA|CAPILLA|PARROQUIA|TEMPLO|ERMITA|CATEDRAL/,"Proyectos Eclesiásticos"],
+ [/PARQUE|COMUNAL|COMUNITARI|MULTIUSO|FUNERARIA|CENTRO\sCIVIC|CENTRO\sCULT|SALON\sCOM|PLAZA\sPUB|PLAZA\sCIV|CENTRO\sREC|CENTRO\sMULT|HOGAR\sDEL\sANC|CENTRO\sDIA/,"Proyectos Comunitarios"],
+ [/\bVIA\b|INFRAESTRUCT\sVIAL/,"Proyectos Viales"]
+];
+const inf=n=>{const u=nz(n).toUpperCase(),r=TR.find(r=>r[0].test(u));return r?r[1]:"Otros"};
+// Texto de la columna "tipo/sector" del Excel -> tipo vigente
+const TK=[
+ [/segur|polici|cuartel|destacam/,"Proyectos Seguridad Ciudadana"],
+ [/deport|cancha|estadio|beisbol|balonces|futbol/,"Proyectos Deportivos"],
+ [/vial|carret|camino|calle|puente|avenida|acera/,"Proyectos Viales"],
+ [/comunitar|parque|comunal|multiuso|funeraria|recreat/,"Proyectos Comunitarios"],
+ [/comerci|mercado|plaza com/,"Proyectos Comerciales"],
+ [/ecles|iglesia|capilla|parroquia|templo/,"Proyectos Eclesiásticos"],
+ [/habit|viviend|residen|apartam|edificio|techo|urbaniz/,"Proyectos Habitacionales"]
+];
+const matchTP=raw=>{if(!raw)return null;const v=nz(raw);const hit=TK.find(([rx])=>rx.test(v));if(hit)return hit[1];if(TP.includes(raw.trim()))return raw.trim();return null};
 
-const KEY="gp_proyectos_v19",OLD="gp_proyectos_v18_master";
+const KEY="gp_proyectos_v21",OLD="gp_proyectos_v20";
 let P=[],F={q:"",r:"",p:"",t:"",s:""},sk="n",sd=1,ed=null,PG=1,PS=25,SG="",LS=null,ERR=false,UN=null;
 const IC={plus:'<path d="M5 12h14M12 5v14"/>',upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',edit:'<path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',trash:'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',cash:'<rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',building:'<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/>'};
 const I=n=>'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
@@ -167,7 +232,7 @@ const fdt=s=>s?s.split("-").reverse().join("/"):"—";
 const fd=d=>d<30?d+" días":(d/30.4).toFixed(1).replace(".0","")+" meses";
 const fh=m=>new Date(m).toLocaleString("es-DO",{dateStyle:"medium",timeStyle:"short"});
 const rd=n=>"RD$ "+Math.round(n).toLocaleString("es-DO");
-const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const opts=(a,f)=>(f?'<option value="">'+f+'</option>':"")+a.map(x=>'<option>'+esc(x)+'</option>').join("");
 function pd(v){if(v instanceof Date)return v.toISOString().slice(0,10);v=String(v==null?"":v).trim();if(!v)return"";
 if(/^\d{5}(\.\d+)?$/.test(v))return new Date(Math.round((+v-25569)*864e5)).toISOString().slice(0,10);
@@ -180,16 +245,23 @@ function cr(x){
  const d=dif(hoy(),f.toISOString().slice(0,10));
  return d<0?{k:"at",t:"Atrasado "+(-d)+" d"}:d<=30?{k:"pv",t:"Vence en "+d+" d"}:{k:"ok",t:"Faltan "+d+" d"};
 }
-const norm=x=>{x.t=x.t||inf(x.n);x.p=R2[x.p]?x.p:"Sin asignar";x.di=x.di||"";x.b=Math.round((+x.b||0)*100)/100;x.ej=Math.round((+x.ej||0)*100)/100;x.a=+x.a||0;x.d=+x.d||0;x.h=Array.isArray(x.h)?x.h:[];return x};
+const TM={"Seguridad Ciudadana":"Proyectos Seguridad Ciudadana","Seguridad ciudadana":"Proyectos Seguridad Ciudadana","Comunitaria":"Proyectos Comunitarios","Eclesiástica":"Proyectos Eclesiásticos","Habitacional":"Proyectos Habitacionales","Deportiva":"Proyectos Deportivos","Vial":"Proyectos Viales","Comercial":"Proyectos Comerciales","Otra":"Otros"};
+const norm=x=>{x.t=TM[x.t]||x.t||inf(x.n);if(!TP.includes(x.t))x.t=inf(x.n);x.p=R2[x.p]?x.p:"Sin asignar";x.di=x.di||"";x.b=Math.round((+x.b||0)*100)/100;x.ej=Math.round((+x.ej||0)*100)/100;x.a=+x.a||0;x.d=+x.d||0;x.h=Array.isArray(x.h)?x.h:[];return x};
 const log=(x,t)=>x.h.push({f:Date.now(),t,u:typeof CU!=="undefined"&&CU?CU.email:""});
 
 function load(){
  try{const d=localStorage.getItem(KEY)||localStorage.getItem(OLD);if(d){const j=JSON.parse(d);if(Array.isArray(j))return j.map(norm)}}catch(e){ERR=true}
  return[]}
 const FBC={apiKey:"AIzaSyADc21S2mCe-Oi4CPK7Y7Y3PywH2ABgDA4",authDomain:"gestion-proyecto-ddp.firebaseapp.com",projectId:"gestion-proyecto-ddp",storageBucket:"gestion-proyecto-ddp.firebasestorage.app",messagingSenderId:"568875755016",appId:"1:568875755016:web:441b8cb0e15f97780793bd"};
-let DB=null,CU=null,CL={},UNS=null,FIRST=true;
+const LB="gp_lastbk";
+function resolveRole(u){const ref=DB.collection("config").doc("acceso"),em=(u.email||"").toLowerCase();
+ return ref.get().then(d=>{if(d.exists){RO=em!==String(d.data().admin||"").toLowerCase();return}
+  return ref.set({admin:em}).then(()=>{RO=false}).catch(()=>{RO=true})}).catch(()=>{RO=true})}
+function bkReminder(){try{const l=+localStorage.getItem(LB)||0;if(Date.now()-l>14*864e5)toast("Recuerda descargar un respaldo (Datos → Descargar respaldo). "+(l?"El último fue hace más de 14 días.":"Aún no has hecho ninguno."),1)}catch(e){}}
+let DB=null,CU=null,CL={},UNS=null,FIRST=true,RO=false,CFGU=null;
 let CE="";
 function save(){
+ if(RO)return;
  try{localStorage.setItem(KEY,JSON.stringify(P));LS=Date.now();ERR=false}catch(e){ERR=true}
  if(DB&&CU){const cur={},ops=[];P.forEach(x=>cur[x.id]=JSON.stringify(x));
   Object.keys(cur).forEach(k=>{if(CL[k]!==cur[k])ops.push(["set",k])});Object.keys(CL).forEach(k=>{if(!(k in cur))ops.push(["del",k])});
@@ -197,10 +269,10 @@ function save(){
    bt.commit().then(()=>{part.forEach(o=>{if(o[0]==="set")CL[o[1]]=cur[o[1]];else delete CL[o[1]]});CE="";sync()}).catch(e=>{CE=e.code||e.message;sync();toast("No se guardó en la nube: "+CE,1)})}}
  sync()}
 function sync(){const n=P.length+" proyectos",hh=LS?new Date(LS).toLocaleTimeString("es-DO",{hour:"2-digit",minute:"2-digit"}):"";
- $("sy").innerHTML=ERR?'<i class="dot x"></i>No se pudo guardar: descarga un respaldo':CE?'<i class="dot x"></i>Error de nube ('+esc(CE)+') · datos solo en este navegador':CU?'<i class="dot"></i>En la nube · '+esc(CU.email)+' · '+n:DB?'<i class="dot x"></i>Sin sesión · '+n:'<i class="dot x"></i>Modo local (sin nube)'+(hh?' · guardado '+hh:'')+' · '+n}
+ $("sy").innerHTML=ERR?'<i class="dot x"></i>No se pudo guardar: descarga un respaldo':CE?'<i class="dot x"></i>Error de nube ('+esc(CE)+') · datos solo en este navegador':CU?'<i class="dot"></i>En la nube · '+esc(CU.email)+(RO?' · solo lectura':'')+' · '+n:DB?'<i class="dot x"></i>Sin sesión · '+n:'<i class="dot x"></i>Modo local (sin nube)'+(hh?' · guardado '+hh:'')+' · '+n}
 function listen(){UNS=DB.collection("proyectos").onSnapshot(snap=>{
  const m={};snap.forEach(d=>m[d.id]=d.data());CE="";
- if(FIRST){FIRST=false;if(snap.empty&&P.length){ask("La nube está vacía","¿Subir los "+P.length+" proyectos guardados en este navegador a la base de datos compartida?",0,()=>save(),"Sí, subir");sync();return}}
+ if(FIRST){FIRST=false;if(snap.empty&&P.length&&!RO){ask("La nube está vacía","¿Subir los "+P.length+" proyectos guardados en este navegador a la base de datos compartida?",0,()=>save(),"Sí, subir");sync();return}}
  CL={};P=Object.keys(m).map(k=>{const o=norm(Object.assign({id:k},m[k]));CL[k]=JSON.stringify(o);return o});
  try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}LS=Date.now();render()},
  err=>{CE=err.code||"error";sync();toast(err.code==="permission-denied"?"Firestore rechazó el acceso: publica las reglas de seguridad.":"Sin conexión con la nube: "+CE,1)})}
@@ -208,7 +280,7 @@ function cloudInit(){
  if(typeof firebase==="undefined")return;
  try{firebase.initializeApp(FBC);DB=firebase.firestore();try{DB.enablePersistence({synchronizeTabs:true}).catch(()=>{})}catch(e){}
   $("lo").style.display="flex";
-  firebase.auth().onAuthStateChanged(u=>{CU=u;if(u){$("lo").style.display="none";$("so").style.display="";if(!UNS)listen()}else{if(UNS){UNS();UNS=null}CL={};FIRST=true;$("so").style.display="none";$("lo").style.display="flex"}sync()})
+  firebase.auth().onAuthStateChanged(u=>{CU=u;if(u){resolveRole(u).then(()=>{document.body.classList.toggle("ro",RO);$("lo").style.display="none";$("so").style.display="";if(!UNS){listen();cfgListen()}if(!RO)bkReminder();sync()});return}RO=false;document.body.classList.remove("ro");{if(UNS){UNS();UNS=null}if(CFGU){CFGU();CFGU=null}CL={};FIRST=true;$("so").style.display="none";$("lo").style.display="flex"}sync()})
  }catch(e){DB=null;$("lo").style.display="none"}}
 const doLogin=()=>{$("ler").textContent="";const e=$("lem").value.trim(),p=$("lpw").value;if(!e||!p){$("ler").textContent="Escribe tu correo y tu contraseña.";return}$("lgo").disabled=true;
  firebase.auth().signInWithEmailAndPassword(e,p).catch(x=>{$("ler").textContent=({"auth/invalid-credential":"Correo o contraseña incorrectos.","auth/wrong-password":"Correo o contraseña incorrectos.","auth/user-not-found":"Correo o contraseña incorrectos.","auth/invalid-email":"El correo no es válido.","auth/too-many-requests":"Demasiados intentos. Espera unos minutos.","auth/unauthorized-domain":"Este dominio no está autorizado: agrégalo en Firebase → Authentication → Configuración → Dominios autorizados.","auth/network-request-failed":"Sin conexión a internet.","auth/operation-not-supported-in-this-environment":"Abre la app desde una dirección web (https), no desde un archivo."})[x.code]||"No se pudo iniciar sesión ("+x.code+")."}).then(()=>{$("lgo").disabled=false})};
@@ -223,21 +295,22 @@ function fill(){
  $("ftp").innerHTML=opts(TP,"Todos los tipos");$("t").innerHTML=opts(TP);
  $("fs").innerHTML=opts(ST,"Todos los estatus");$("s").innerHTML=opts(ST);
 }
-function dn(it,ct,sub,f){
+function dn(it,ct,sub,f,all){
  const t=it.reduce((s,x)=>s+x.v,0),C=2*Math.PI*54;let o=0,s='<svg viewBox="0 0 140 140" width="150" height="150" role="img" aria-label="'+sub+'"><circle cx="70" cy="70" r="54" fill="none" stroke="var(--bar)" stroke-width="20"/>';
  if(!t)return'<div class="dw">'+s+'<text x="70" y="75" text-anchor="middle" font-size="15" font-weight="700" fill="var(--tx)">0</text></svg><div class="e">Sin datos</div></div>';
  it.forEach(x=>{const d=x.v/t*C;s+='<circle cx="70" cy="70" r="54" fill="none" stroke="'+x.c+'" stroke-width="20" stroke-dasharray="'+d+' '+(C-d)+'" stroke-dashoffset="'+(-o)+'" transform="rotate(-90 70 70)"/>';o+=d});
  s+='<text x="70" y="69" text-anchor="middle" font-size="14" font-weight="700" fill="var(--tx)">'+ct+'</text><text x="70" y="85" text-anchor="middle" font-size="9" fill="var(--mu)">'+sub+'</text></svg>';
- return'<div class="dw">'+s+'<div class="lz">'+it.map(x=>'<div class="lr"'+(x.p?' data-p="'+esc(x.p)+'"':'')+(x.t?' data-t="'+esc(x.t)+'"':'')+'><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+f(x.v)+'</b></div>').join("")+'</div></div>';
+ return'<div class="dw">'+s+'<div class="lz">'+(all||it).map(x=>'<div class="lr"'+(x.p?' data-p="'+esc(x.p)+'"':'')+(x.t?' data-t="'+esc(x.t)+'"':'')+(x.s?' data-s="'+esc(x.s)+'"':'')+'><i style="background:'+x.c+'"></i><span>'+esc(x.l)+'</span><b>'+f(x.v)+'</b></div>').join("")+'</div></div>';
 }
 function dash(G,L){
  const ks=Object.keys(G).sort((a,b)=>G[b]-G[a]),T=ks.reduce((t,k)=>t+G[k],0),tp=ks.slice(0,5).map((k,i)=>({l:k,v:G[k],c:CT[i],p:k})),ot=T-tp.reduce((t,x)=>t+x.v,0),
  SC={"Planificación":"#d97706","En ejecución":"#1d4ed8","Finalizado":"#16a34a","Suspendido":"#dc2626"},tg={};
  if(ot>0)tp.push({l:"Otras provincias",v:ot,c:CT[10]});
- const sl=ST.map(s=>({l:s,v:L.filter(x=>x.s===s).length,c:SC[s]})).filter(x=>x.v>0);
+ const pa=ks.map((k,i)=>({l:k,v:G[k],c:i<5?CT[i]:CT[10],p:k}));
+ const sl=ST.map(s=>({l:s,v:L.filter(x=>x.s===s).length,c:SC[s],s})).filter(x=>x.v>0);
  L.forEach(x=>tg[x.t]=(tg[x.t]||0)+1);
  const tl=Object.keys(tg).sort((a,b)=>tg[b]-tg[a]).map((k,i)=>({l:k,v:tg[k],c:CT[i%CT.length],t:k}));
- $("dn").innerHTML='<div class="c"><h3>Top 5 provincias por presupuesto</h3>'+dn(tp,T?(T/1e6).toFixed(1)+" M":"0","RD$",v=>(v/1e6).toFixed(1)+" M")+'</div><div class="c"><h3>Proyectos por tipo de obra</h3>'+dn(tl,L.length,"proyectos",v=>v)+'</div><div class="c"><h3>Proyectos por estatus</h3>'+dn(sl,L.length,"proyectos",v=>v)+'</div>';
+ $("dn").innerHTML='<div class="c"><h3>Presupuesto por provincia</h3>'+dn(tp,T?(T/1e6).toFixed(1)+" M":"0","RD$",v=>(v/1e6).toFixed(1)+" M",pa)+'</div><div class="c"><h3>Proyectos por tipo de obra</h3>'+dn(tl,L.length,"proyectos",v=>v)+'</div><div class="c"><h3>Proyectos por estatus</h3>'+dn(sl,L.length,"proyectos",v=>v)+'</div>';
 }
 function match(x,skipP){const t=nz([x.n,x.u,x.c,x.p,x.v,x.ct,x.o,x.t].join(" "));
  return(!F.q||t.indexOf(nz(F.q))>-1)&&(!F.r||R2[x.p]===F.r)&&(!F.s||x.s===F.s)&&(!F.t||x.t===F.t)&&(skipP||!F.p||x.p===F.p)}
@@ -275,9 +348,9 @@ function detalle(id){
  +(x.o?'<div class="ob2"><small style="color:var(--mu);display:block">Observación</small>'+esc(x.o)+'</div>':'')+'</div>'
  +'<div class="dc2"><h4>Bitácora</h4><div class="g2" style="grid-template-columns:1fr auto"><input id="nt" placeholder="Escribe una nota o novedad…"><button class="b" id="na" data-n="'+x.id+'">Agregar</button></div><ul class="hi" style="margin-top:16px">'+(x.h.slice().reverse().map(h=>'<li>'+esc(h.t)+'<small>'+fh(h.f)+(h.u?' · '+esc(h.u):'')+'</small></li>').join("")||'<li style="color:var(--mu)">Aún no hay registros.</li>')+'</ul></div></div>'
  +'<div class="dft"><button class="b" data-e="'+x.id+'">Editar proyecto</button><button class="b p" id="cv">Cerrar</button></div>';
- $("cv").onclick=()=>$("dv").close();$("qa").oninput=function(){$("qv").textContent=this.value+"%"};$("nt").onkeydown=e=>{if(e.key==="Enter")$("na").click()};$("dv").showModal();
+ if(RO){const h=[...$("dvb").querySelectorAll("h4")].find(e=>e.textContent==="Actualizar avance");if(h){h.nextElementSibling.remove();h.remove()}$("nt").parentElement.remove()}$("cv").onclick=()=>$("dv").close();if($("qa"))$("qa").oninput=function(){$("qv").textContent=this.value+"%"};if($("nt"))$("nt").onkeydown=e=>{if(e.key==="Enter")$("na").click()};$("dv").showModal();
 }
-function abrir(id){ed=id;const x=P.find(p=>p.id===id)||{n:"",p:F.p||"Distrito Nacional",u:"",c:"",b:"",ej:"",a:0,s:"Planificación",v:"",ct:"",o:"",t:F.t||TP[0],di:"",d:""};
+function abrir(id){if(RO)return;ed=id;const x=P.find(p=>p.id===id)||{n:"",p:F.p||"Distrito Nacional",u:"",c:"",b:"",ej:"",a:0,s:"Planificación",v:"",ct:"",o:"",t:F.t||TP[0],di:"",d:""};
  $("dt").textContent=id?"Editar proyecto":"Nuevo proyecto";
  const m={n:"n",p:"p",u:"u",c:"c",b:"b",ej:"ej",s:"s",t:"t",di:"di",d:"du",v:"sv",ct:"ct2",o:"ob",a:"a"};for(const k in m)$(m[k]).value=x[k]==null?"":x[k];
  $("av").textContent=x.a+"%";$("dg").showModal()}
@@ -298,14 +371,15 @@ const guardar=()=>{if(!$("fm").reportValidity())return;
 
 document.addEventListener("click",e=>{
  if(!e.target.closest(".dm"))$("dm").open=false;
- const t=e.target.closest("[data-p],[data-t],[data-k],[data-e],[data-d],[data-g],[data-v],[data-n],[data-qa]");if(!t)return;const d=t.dataset;
- if(d.v)return detalle(d.v);
+ const t=e.target.closest("[data-p],[data-t],[data-s],[data-k],[data-e],[data-d],[data-g],[data-v],[data-n],[data-qa]");if(!t)return;const d=t.dataset;
+ if(RO&&(d.e||d.d||d.qa||d.n))return;if(d.v)return detalle(d.v);
  if(d.qa){const x=P.find(p=>p.id===d.qa),v=+$("qa").value;if(v===x.a)return toast("El avance no cambió.");log(x,"Avance físico: "+x.a+"% → "+v+"%");x.a=v;
   if(v===100&&x.s!=="Suspendido"){if(x.s!=="Finalizado")log(x,"Estatus: "+x.s+" → Finalizado");x.s="Finalizado"}else if(v>0&&x.s==="Planificación"){log(x,"Estatus: Planificación → En ejecución");x.s="En ejecución"}
   save();render();detalle(x.id);return toast("Avance actualizado")}
  if(d.n){const v=$("nt").value.trim();if(!v)return;const x=P.find(p=>p.id===d.n);log(x,"Nota: "+v);save();return detalle(d.n)}
  if(d.p!==undefined){F.p=F.p===d.p?"":d.p;$("fp").value=F.p}
  else if(d.t!==undefined){F.t=F.t===d.t?"":d.t;$("ftp").value=F.t}
+ else if(d.s!==undefined){F.s=F.s===d.s?"":d.s;$("fs").value=F.s}
  else if(d.k){sd=sk===d.k?-sd:1;sk=d.k}
  else if(d.g)PG+=+d.g;
  else if(d.e){e.preventDefault();$("dv").close();return abrir(d.e)}
@@ -321,60 +395,109 @@ $("xp").onclick=()=>{if(!window.XLSX)return toast("No se pudo cargar el generado
  const rows=P.filter(x=>match(x)).map(x=>({"Región":R2[x.p]||"","Provincia":x.p,"Nombre del Proyecto":x.n,"Ubicación":x.u||"","Código SNIP":x.c||"","Tipo de obra":x.t,"Presupuesto (RD$)":x.b,"Ejecutado (RD$)":x.ej,"Fecha de inicio":x.di?fdt(x.di):"","Duración (días)":x.d||"","% Avance":x.a,"Estatus":x.s,"Supervisor":x.v||"","Contratista":x.ct||"","Observación":x.o||""}));
  if(!rows.length)return toast("No hay proyectos para exportar.",1);
  const w=XLSX.utils.book_new();XLSX.utils.book_append_sheet(w,XLSX.utils.json_to_sheet(rows),"Proyectos");XLSX.writeFile(w,"Proyectos_"+hoy()+".xlsx");toast("Exportados "+rows.length+" proyectos")};
-$("bk").onclick=()=>{dl(new Blob([JSON.stringify({version:19,fecha:new Date().toISOString(),proyectos:P},null,1)],{type:"application/json"}),"Respaldo_Proyectos_"+hoy()+".json");toast("Respaldo descargado")};
+$("bk").onclick=()=>{dl(new Blob([JSON.stringify({version:19,fecha:new Date().toISOString(),proyectos:P},null,1)],{type:"application/json"}),"Respaldo_Proyectos_"+hoy()+".json");try{localStorage.setItem(LB,Date.now())}catch(e){}toast("Respaldo descargado")};
 $("rs").onclick=()=>{$("fj").value="";$("fj").click()};
 $("fj").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result),a=Array.isArray(j)?j:j.proyectos;if(!Array.isArray(a))throw 0;
  ask("¿Restaurar respaldo?","Se reemplazarán los "+P.length+" proyectos actuales por los "+a.length+" del respaldo.",0,()=>{P=a.map(norm);save();render();toast("Respaldo restaurado: "+a.length+" proyectos")},"Sí, restaurar")}catch(x){toast("El archivo no es un respaldo válido.",1)}};r.readAsText(f)};
 $("btnApply").onclick=()=>{save();render();toast(ERR?"No se pudo guardar en este navegador. Descarga un respaldo.":"Cambios aplicados y guardados",ERR)};
 function informe(){
  const L=P.filter(x=>match(x)),inv=L.reduce((t,x)=>t+x.b,0),ejc=L.reduce((t,x)=>t+x.ej,0),av=inv?L.reduce((t,x)=>t+x.a*x.b,0)/inv:(L.length?L.reduce((t,x)=>t+x.a,0)/L.length:0),at=L.filter(x=>cr(x).k==="at").length;
- const SC={"Planificación":"#d97706","En ejecución":"#1d4ed8","Finalizado":"#16a34a","Suspendido":"#dc2626"},M=v=>(v/1e6).toLocaleString("es-DO",{maximumFractionDigits:1})+" M";
+ const SC={"Planificación":"#c27803","En ejecución":"#1d4ed8","Finalizado":"#15803d","Suspendido":"#b91c1c"};
+ const SB={"Planificación":"#fef3c7","En ejecución":"#dbeafe","Finalizado":"#dcfce7","Suspendido":"#fee2e2"};
+ const M=v=>(v/1e6).toLocaleString("es-DO",{maximumFractionDigits:1})+" M";
  const cnt=f=>{const o={};L.forEach(x=>{const k=f(x);o[k]=(o[k]||0)+1});return o};
  const sts=ST.map(s=>({l:s,v:L.filter(x=>x.s===s).length,c:SC[s]})).filter(x=>x.v);
  const G={};L.forEach(x=>G[x.p]=(G[x.p]||0)+x.b);
  const prv=Object.keys(G).sort((a,b)=>G[b]-G[a]).slice(0,8).map((k,i)=>({l:k,v:G[k],c:CT[i]}));
  const tc=cnt(x=>x.t),tps=Object.keys(tc).sort((a,b)=>tc[b]-tc[a]).slice(0,8).map((k,i)=>({l:k,v:tc[k],c:CT[i]}));
- const ZL={at:["Atrasados","#dc2626"],pv:["Vencen en 30 días","#d97706"],ok:["A tiempo","#16a34a"],nd:["Sin fecha","#94a3b8"],"":["Finalizados o suspendidos","#cbd5e1"]},zc=cnt(x=>cr(x).k),zs=Object.keys(ZL).map(k=>({l:ZL[k][0],v:zc[k]||0,c:ZL[k][1]})).filter(x=>x.v);
- const donut=it=>{const t=it.reduce((a,x)=>a+x.v,0)||1,C=2*Math.PI*45;let o=0,r='<svg viewBox="0 0 120 120" width="130" height="130"><circle cx="60" cy="60" r="45" fill="none" stroke="#e5e7eb" stroke-width="18"/>';it.forEach(x=>{const d=x.v/t*C;r+=`<circle cx="60" cy="60" r="45" fill="none" stroke="${x.c}" stroke-width="18" stroke-dasharray="${d} ${C-d}" stroke-dashoffset="${-o}" transform="rotate(-90 60 60)"/>`;o+=d});return r+`<text x="60" y="65" text-anchor="middle" font-size="18" font-weight="700">${L.length}</text></svg>`};
- const leg=it=>it.map(x=>`<div class="lg"><i style="background:${x.c}"></i><span>${esc(x.l)}</span><b>${x.v}</b></div>`).join("");
- const bars=(it,f)=>{const m=Math.max(...it.map(x=>x.v),1);return it.map(x=>`<div class="br"><span>${esc(x.l)}</span><div class="bt"><i style="width:${x.v/m*100}%;background:${x.c}"></i></div><b>${f(x.v)}</b></div>`).join("")};
+ const ZL={at:["Atrasados","#dc2626"],pv:["Vencen en 30 días","#d97706"],ok:["A tiempo","#16a34a"],nd:["Sin fecha","#94a3b8"],"":["Finalizados/Suspendidos","#cbd5e1"]},zc=cnt(x=>cr(x).k),zs=Object.keys(ZL).map(k=>({l:ZL[k][0],v:zc[k]||0,c:ZL[k][1]})).filter(x=>x.v);
+ const donut=(it,ct,sub)=>{const t=it.reduce((a,x)=>a+x.v,0)||1,C=2*Math.PI*48;let o=0,r=`<svg viewBox="0 0 130 130" width="120" height="120"><circle cx="65" cy="65" r="48" fill="none" stroke="#e5e9f0" stroke-width="16"/>`;it.forEach(x=>{const d=x.v/t*C;r+=`<circle cx="65" cy="65" r="48" fill="none" stroke="${x.c}" stroke-width="16" stroke-dasharray="${d} ${C-d}" stroke-dashoffset="${-o}" transform="rotate(-90 65 65)"/>`;o+=d});return r+`<text x="65" y="61" text-anchor="middle" font-size="20" font-weight="700" fill="#1b2433">${ct}</text><text x="65" y="77" text-anchor="middle" font-size="9" fill="#667085">${sub}</text></svg>`};
+ const leg=it=>it.map(x=>`<div style="display:flex;align-items:center;gap:7px;padding:3px 0;font-size:11px"><i style="width:11px;height:11px;border-radius:3px;background:${x.c};flex:none"></i><span style="flex:1">${esc(x.l)}</span><b style="font-size:12px">${x.v}</b></div>`).join("");
+ const bars=(it,f,mx)=>{const m=mx||Math.max(...it.map(x=>x.v),1);return it.map(x=>`<div style="display:grid;grid-template-columns:140px 1fr 56px;gap:8px;align-items:center;margin:5px 0"><span style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(x.l)}">${esc(x.l)}</span><div style="background:#e5e9f0;height:10px;border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${x.v/m*100}%;background:${x.c}"></i></div><b style="text-align:right;font-size:11px">${f(x.v)}</b></div>`).join("")};
  const fl=[F.q&&"Búsqueda: «"+F.q+"»",F.r&&"Región: "+F.r,F.p&&"Provincia: "+F.p,F.t&&"Tipo: "+F.t,F.s&&"Estatus: "+F.s].filter(Boolean);
  const rg=Object.keys(REG),S=L.slice().sort((x,y)=>rg.indexOf(R2[x.p])-rg.indexOf(R2[y.p])||x.p.localeCompare(y.p,"es")||x.n.localeCompare(y.n,"es"));
- let rows="",cur=null;S.forEach(x=>{if(x.p!==cur){cur=x.p;const g=S.filter(y=>y.p===cur);rows+=`<tr class="gh"><td colspan="9">${esc(R2[cur]||"")} › ${esc(cur)} <span>${g.length} proyecto(s) · ${rd(g.reduce((t,y)=>t+y.b,0))}</span></td></tr>`}
-  const z=cr(x);rows+=`<tr><td>${esc(x.c||"—")}</td><td><b>${esc(x.n)}</b>${x.v?`<small>Supervisor: ${esc(x.v)}</small>`:""}</td><td>${esc(x.t)}</td><td class="r">${rd(x.b)}</td><td class="r">${rd(x.ej)}</td><td>${fdt(x.di)}</td><td>${x.a}%<div class="pb"><i style="width:${x.a}%"></i></div></td><td style="color:${SC[x.s]};font-weight:700">${x.s}</td><td class="z${z.k}">${z.t||"—"}</td></tr>`});
- const h=`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Informe de proyectos ${hoy()}</title><style>
-@page{size:A4 landscape;margin:12mm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{font:12px/1.4 Arial,Helvetica,sans-serif;color:#1b2433;margin:0;padding:24px 32px}
-.tool{position:sticky;top:0;background:#1d4ed8;color:#fff;padding:10px 32px;margin:-24px -32px 20px;display:flex;justify-content:space-between;align-items:center;z-index:5}.tool button{background:#fff;color:#1d4ed8;border:0;border-radius:8px;padding:8px 16px;font-weight:700;cursor:pointer}
-.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #1d4ed8;padding-bottom:10px}h1{margin:0;font-size:24px}.hd p{margin:2px 0 0;color:#667085}.hd .d{text-align:right;color:#667085}
-.fl{margin:10px 0;padding:8px 12px;background:#f1f5f9;border-radius:6px;color:#475467}
-.k{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.k div{border:1px solid #d9dee7;border-top:3px solid #1d4ed8;border-radius:6px;padding:10px 12px}.k small{color:#667085;display:block}.k b{font-size:17px}
-h2{font-size:14px;margin:18px 0 8px;color:#1d4ed8}.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px}.cc{border:1px solid #d9dee7;border-radius:6px;padding:12px;break-inside:avoid}.cc h3{margin:0 0 8px;font-size:12px}
-.dw{display:flex;gap:14px;align-items:center}.dw>div{flex:1}.lg{display:flex;gap:6px;align-items:center;padding:2px 0}.lg i{width:10px;height:10px;border-radius:2px}.lg span{flex:1}
-.br{display:grid;grid-template-columns:130px 1fr 60px;gap:8px;align-items:center;margin:4px 0}.br span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.br b{text-align:right}.bt{background:#e5e7eb;height:10px;border-radius:5px;overflow:hidden}.bt i{display:block;height:100%}
-table{width:100%;border-collapse:collapse;margin-top:6px}thead{display:table-header-group}th{background:#1d4ed8;color:#fff;text-align:left;padding:6px;font-size:11px}td{padding:6px;border-bottom:1px solid #e3e7ee;vertical-align:top}tr{break-inside:avoid}td small{display:block;color:#667085}.r{text-align:right;white-space:nowrap}
-.gh td{background:#eaf0fe;font-weight:700;color:#1d4ed8;border-bottom:1px solid #c7d6fb}.gh span{font-weight:400;color:#475467;margin-left:10px}
-.pb{height:5px;background:#e5e7eb;border-radius:3px;margin-top:3px;width:70px}.pb i{display:block;height:100%;background:#1d4ed8;border-radius:3px}.zat{color:#dc2626;font-weight:700}.zpv{color:#b45309;font-weight:700}.zok{color:#15803d}
-.sg{display:flex;gap:40px;margin-top:50px;break-inside:avoid}.sg div{flex:1;border-top:1px solid #667085;padding-top:4px;text-align:center;color:#667085}
-.ft{margin-top:20px;color:#98a2b3;font-size:10px;text-align:center}@media print{.tool{display:none}body{padding:0}}
+ let rows="",cur=null;S.forEach(x=>{
+  if(x.p!==cur){cur=x.p;const g=S.filter(y=>y.p===cur),gb=g.reduce((t,y)=>t+y.b,0);
+   rows+=`<tr><td colspan="9" style="background:#1d4ed8;color:#fff;font-weight:700;padding:7px 10px;font-size:11px">${esc(R2[cur]||"")} › ${esc(cur)}<span style="font-weight:400;margin-left:12px;opacity:.85">${g.length} proyecto(s) &nbsp;·&nbsp; ${rd(gb)}</span></td></tr>`}
+  const z=cr(x),pct=x.b?Math.round(x.ej/x.b*100):0;
+  rows+=`<tr style="break-inside:avoid"><td style="color:#667085;font-size:11px;white-space:nowrap">${esc(x.c||"—")}</td><td><b style="font-size:11.5px">${esc(x.n)}</b>${x.v?`<br><span style="color:#667085;font-size:10px">Supervisor: ${esc(x.v)}</span>`:""}</td><td style="white-space:nowrap"><span style="background:#f1f5f9;border:1px solid #d9dee7;border-radius:4px;padding:1px 6px;font-size:10px">${esc(x.t)}</span></td><td style="text-align:right;white-space:nowrap;font-size:11px">${rd(x.b)}</td><td style="text-align:right;white-space:nowrap;font-size:11px">${rd(x.ej)}<br><span style="color:#667085;font-size:10px">${pct}%</span></td><td style="font-size:11px;white-space:nowrap">${fdt(x.di)}</td><td style="min-width:80px"><div style="display:flex;align-items:center;gap:5px;font-size:11px">${x.a}%</div><div style="height:5px;background:#e5e9f0;border-radius:3px;margin-top:3px;width:60px"><i style="display:block;height:100%;width:${x.a}%;background:${x.a===100?'#15803d':'#1d4ed8'};border-radius:3px"></i></div></td><td style="white-space:nowrap"><span style="background:${SB[x.s]};color:${SC[x.s]};border-radius:99px;padding:2px 8px;font-size:10px;font-weight:700">${x.s}</span></td><td style="font-size:10px;white-space:nowrap;color:${z.k==='at'?'#b91c1c':z.k==='pv'?'#c27803':'#15803d'};font-weight:${z.k?'700':'400'}">${z.t||"—"}</td></tr>`});
+ const kpi=(l,v,ic)=>`<div style="border:1px solid #d9dee7;border-top:3px solid ${ic};border-radius:8px;padding:12px 14px;break-inside:avoid"><div style="color:#667085;font-size:11px;margin-bottom:4px">${l}</div><div style="font-size:18px;font-weight:700;line-height:1.2">${v}</div></div>`;
+ const h=`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Informe de Proyectos — ${hoy()}</title>
+<style>
+@page{size:A4 landscape;margin:14mm 12mm}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:#1b2433;margin:0;background:#fff}
+
+.wrap{padding:28px 36px 40px}
+.cover{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #0f2d6b;padding-bottom:14px;margin-bottom:16px}
+.cover-left{display:flex;gap:16px;align-items:center}
+.logo-box{width:52px;height:52px;background:#0f2d6b;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.logo-box svg{width:30px;height:30px;fill:#fff}
+.cover h1{margin:0;font-size:22px;color:#0f2d6b;font-weight:700;letter-spacing:-.3px}
+.cover p{margin:3px 0 0;color:#667085;font-size:12px}
+.cover-right{text-align:right;color:#667085;font-size:12px;line-height:1.6}
+.cover-right strong{color:#1b2433}
+.scope{background:#f8fafc;border-left:4px solid #0f2d6b;border-radius:4px;padding:8px 14px;margin-bottom:16px;font-size:12px;color:#475467}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.section-title{font-size:13px;font-weight:700;color:#0f2d6b;border-bottom:2px solid #e3e7ee;padding-bottom:5px;margin:20px 0 12px;letter-spacing:.2px;text-transform:uppercase}
+.charts{display:grid;grid-template-columns:1fr 1fr 1.3fr 1.3fr;gap:14px;margin-bottom:20px}
+.chart-card{border:1px solid #d9dee7;border-radius:8px;padding:14px;break-inside:avoid}
+.chart-card h3{margin:0 0 10px;font-size:11px;font-weight:700;color:#475467;text-transform:uppercase;letter-spacing:.5px}
+.chart-inner{display:flex;gap:12px;align-items:center}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+thead tr th{background:#0f2d6b;color:#fff;padding:8px 10px;text-align:left;font-size:10.5px;font-weight:600;letter-spacing:.3px}
+tbody tr:hover{background:#f8fafc}
+tbody td{padding:7px 10px;border-bottom:1px solid #e3e7ee;vertical-align:middle}
+.sign{display:flex;gap:50px;margin-top:56px;padding-top:12px;break-inside:avoid}
+.sign div{flex:1;border-top:1px solid #94a3b8;padding-top:5px;text-align:center;color:#667085;font-size:11px}
+.footer{margin-top:16px;text-align:center;color:#94a3b8;font-size:10px;border-top:1px solid #e3e7ee;padding-top:8px}
+@media print{.screen-bar{display:none!important}.wrap{padding:0}}
 </style></head><body>
-<div class="tool"><span>Vista previa del informe</span><button onclick="window.print()">Imprimir / guardar PDF</button></div>
-<div class="hd"><div><h1>Informe de Gestión de Proyectos</h1><p>Portafolio institucional de obras y desarrollo provincial · República Dominicana</p></div><div class="d">Generado el<br><b>${fh(Date.now())}</b></div></div>
-<div class="fl"><b>Alcance:</b> ${fl.length?fl.map(esc).join(" · "):"Portafolio completo, sin filtros"} · ${L.length} de ${P.length} proyectos</div>
-<div class="k"><div><small>Proyectos</small><b>${L.length}</b></div><div><small>Presupuesto total</small><b>${rd(inv)}</b></div><div><small>Monto ejecutado</small><b>${rd(ejc)} (${inv?(ejc/inv*100).toFixed(0):0}%)</b></div><div><small>Avance físico ponderado</small><b>${av.toFixed(0)}%</b></div><div><small>Proyectos atrasados</small><b>${at}</b></div></div>
-<h2>Resumen gráfico</h2><div class="cg">
-<div class="cc"><h3>Proyectos por estatus</h3><div class="dw">${donut(sts)}<div>${leg(sts)}</div></div></div>
-<div class="cc"><h3>Estado del cronograma</h3><div class="dw">${donut(zs)}<div>${leg(zs)}</div></div></div>
-<div class="cc"><h3>Presupuesto por provincia (RD$ millones, top 8)</h3>${bars(prv,M)}</div>
-<div class="cc"><h3>Proyectos por tipo de obra</h3>${bars(tps,v=>v)}</div></div>
-<h2>Detalle de proyectos por provincia</h2>
-<table><thead><tr><th>SNIP</th><th>Proyecto</th><th>Tipo</th><th>Presupuesto</th><th>Ejecutado</th><th>Inicio</th><th>Avance</th><th>Estatus</th><th>Cronograma</th></tr></thead><tbody>${rows||'<tr><td colspan="9">Sin proyectos para mostrar.</td></tr>'}</tbody></table>
-<div class="sg"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
-<div class="ft">Sistema de Gestión de Proyectos · Informe generado el ${fh(Date.now())}</div></body></html>`;
- return new Blob([h],{type:"text/html"})}
+
+<div class="wrap">
+<div class="cover">
+ <div class="cover-left">
+  <div class="logo-box"${CFG.logo?' style="background:transparent"':''}>${CFG.logo?'<img src="'+CFG.logo+'" style="width:52px;height:52px;border-radius:12px;object-fit:cover">':'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'}</div>
+  <div><div class="cover h1" style="font-size:22px;font-weight:700;color:#0f2d6b">Informe de Gestión de Proyectos</div><div style="color:#667085;font-size:12px;margin-top:3px">${esc(CFG.sub)}</div><div style="color:#94a3b8;font-size:11px;margin-top:2px">Dirección de Desarrollo Provincial</div></div>
+ </div>
+ <div class="cover-right">Generado el<br><strong>${fh(Date.now())}</strong><br><span style="font-size:10px;color:#94a3b8">Sistema de Gestión de Proyectos</span></div>
+</div>
+<div class="scope"><strong>Alcance del informe:</strong> ${fl.length?fl.map(esc).join(" &nbsp;·&nbsp; "):"Portafolio completo, sin filtros aplicados"} &nbsp;·&nbsp; <strong>${L.length}</strong> de <strong>${P.length}</strong> proyectos incluidos</div>
+<div class="kpis">
+ ${kpi("Total de proyectos","<b>"+L.length+"</b>","#0f2d6b")}
+ ${kpi("Presupuesto total",rd(inv),"#1d4ed8")}
+ ${kpi("Monto ejecutado",rd(ejc)+" <span style='font-size:13px;color:#667085'>("+(inv?(ejc/inv*100).toFixed(0):0)+"%)</span>","#16a34a")}
+ ${kpi("Avance físico ponderado","<b>"+av.toFixed(0)+"%</b>","#d97706")}
+ ${kpi("Proyectos atrasados","<b style='color:"+(at>0?"#b91c1c":"#15803d")+"'>"+at+"</b>","#b91c1c")}
+</div>
+<div class="section-title">Resumen gráfico</div>
+<div class="charts">
+ <div class="chart-card"><h3>Por estatus</h3><div class="chart-inner">${donut(sts,L.length,"proyectos")}<div>${leg(sts)}</div></div></div>
+ <div class="chart-card"><h3>Estado del cronograma</h3><div class="chart-inner">${donut(zs,L.length,"proyectos")}<div>${leg(zs)}</div></div></div>
+ <div class="chart-card"><h3>Presupuesto por provincia (RD$ millones, top 8)</h3>${bars(prv,M)}</div>
+ <div class="chart-card"><h3>Proyectos por tipo de obra</h3>${bars(tps,v=>v)}</div>
+</div>
+<div class="section-title">Detalle de proyectos por provincia</div>
+<table><thead><tr><th style="width:62px">SNIP</th><th>Proyecto / Supervisor</th><th style="width:110px">Tipo de obra</th><th style="width:120px;text-align:right">Presupuesto</th><th style="width:110px;text-align:right">Ejecutado</th><th style="width:72px">Inicio</th><th style="width:88px">Avance</th><th style="width:100px">Estatus</th><th style="width:100px">Cronograma</th></tr></thead>
+<tbody>${rows||'<tr><td colspan="9" style="text-align:center;padding:20px;color:#667085">Sin proyectos para mostrar.</td></tr>'}</tbody></table>
+<div class="sign"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
+<div class="footer">${esc(CFG.name)} · Sistema de Gestión de Proyectos · Informe generado el ${fh(Date.now())}</div>
+</div></body></html>`;
+ return h;}
+
 let PR=0;
-$("pr").onclick=()=>{if(!P.length)return toast("No hay proyectos para el informe.",1);const bl=informe();let w=null;try{w=window.open(URL.createObjectURL(bl),"_blank")}catch(e){}
- if(w)toast("Informe abierto. Usa «Imprimir / guardar PDF» en esa pestaña.");else{dl(bl,"Informe_Proyectos_"+hoy()+".html");toast("Informe descargado. Ábrelo y usa «Imprimir / guardar PDF».")}};
+$("pr").onclick=()=>{
+ if(!P.length)return toast("No hay proyectos para el informe.",1);
+ const html=informe();
+ const fr=$("rf");
+ fr.srcdoc=html;
+ $("rp").showModal();
+};
+$("ip").onclick=()=>{
+ const fr=$("rf");
+ if(fr.contentWindow){fr.contentWindow.focus();fr.contentWindow.print();}
+};
+$("ic").onclick=()=>$("rp").close();
 window.onbeforeprint=()=>{PR=1;PS=1e9;render()};
 window.onafterprint=()=>{PS=25;render()};
 $("da").onclick=()=>{if(!P.length)return toast("No hay proyectos para eliminar.",1);ask("¿Borrar todo el portafolio?","Se eliminarán los "+P.length+" proyectos. Descarga un respaldo antes si lo necesitas.","BORRAR",()=>{P=[];save();render();toast("Portafolio eliminado")},"Sí, borrar todo")};
@@ -400,7 +523,7 @@ $("fi").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!window.XLSX)retu
     const et=nz(g(r,"e")),du=nz(g(r,"d")).match(/(\d+)\s*(ano|mes|dia)/);let s="Planificación",a=0;
     if(fin||/inaugur|finaliz|ejecutado|terminad|conclu/.test(et)){s="Finalizado";a=100}else if(/suspend|deten|paraliz|no tiene/.test(et))s="Suspendido";else if(/ejecuc|proceso|construc/.test(et))s="En ejecución";
     const av=parseFloat(g(r,"a").replace(/[^0-9.]/g,""));if(!isNaN(av)&&s!=="Finalizado")a=Math.min(100,av<=1&&/%/.test(g(r,"a"))===false&&av>0&&av<=1?av*100:av);
-    const o=norm({id:"p"+Date.now()+"_"+add.length,n,p:prov,c:g(r,"c"),t:g(r,"t")?inf(g(r,"t")):inf(n),b,a,s,di:M.di!=null?pd(r[M.di]):"",d:du?+du[1]*(du[2]==="ano"?365:du[2]==="mes"?30:1):0,v:g(r,"v"),ct:g(r,"ct"),o:et?"Etapa en Excel: "+et:"",h:[]});
+    const o=norm({id:"p"+Date.now()+"_"+add.length,n,p:prov,c:g(r,"c"),t:g(r,"t")?(matchTP(g(r,"t"))||inf(g(r,"t"))||inf(n)):inf(n),b,a,s,di:M.di!=null?pd(r[M.di]):"",d:du?+du[1]*(du[2]==="ano"?365:du[2]==="mes"?30:1):0,v:g(r,"v"),ct:g(r,"ct"),o:et?"Etapa en Excel: "+et:"",h:[]});
     log(o,"Importado desde «"+f.name+"» (hoja "+sn+")");add.push(o)}});
   $("ld").style.display="none";
   const key=x=>x.c?"c:"+nz(x.c):"n:"+nz(x.n)+"|"+x.p,have=new Set(P.map(key)),nuevos=add.filter(x=>{const k=key(x);if(have.has(k))return false;have.add(k);return true});
@@ -415,8 +538,45 @@ document.querySelectorAll(".mn button").forEach(b=>b.addEventListener("click",()
 fill();document.querySelectorAll("[data-i]").forEach(el=>el.insertAdjacentHTML("afterbegin",I(el.dataset.i)));
 $("lgo").onclick=doLogin;$("lpw").onkeydown=e=>{if(e.key==="Enter")doLogin()};$("lem").onkeydown=e=>{if(e.key==="Enter")$("lpw").focus()};
 $("up").onclick=()=>{if(!DB)return toast("La nube no está disponible: la app abrió en modo local.",1);if(!CU)return toast("Inicia sesión primero.",1);CL={};save();toast("Enviando "+P.length+" proyectos a la nube…")};
-$("so").onclick=()=>{if(DB)firebase.auth().signOut()};
-P=load();render();cloudInit();
+$("so").onclick=()=>{if(!DB)return;firebase.auth().signOut().then(()=>{try{localStorage.removeItem(KEY);localStorage.removeItem(OLD);localStorage.removeItem(CFG_KEY)}catch(e){}P=[];CL={};CFG=Object.assign(CFG,{name:"Gestión de Proyectos",sub:"Portafolio institucional de obras",logo:"",color:"#1d4ed8"});applyCFG();render()})};
+// ── Configuración institucional ──────────────────────────────
+const CFG_KEY="gp_config_v1";
+let CFG={name:"Gestión de Proyectos",sub:"Portafolio institucional de obras",logo:"",color:"#1d4ed8"};
+function loadCFG(){try{const d=localStorage.getItem(CFG_KEY);if(d)CFG=Object.assign(CFG,JSON.parse(d))}catch(e){}}
+function saveCFG(){try{localStorage.setItem(CFG_KEY,JSON.stringify(CFG))}catch(e){}
+ if(DB&&CU&&!RO)DB.collection("config").doc("institucion").set(CFG).catch(e=>toast("La configuración no se guardó en la nube: "+(e.code||e.message),1))}
+function cfgListen(){if(CFGU||!DB)return;CFGU=DB.collection("config").doc("institucion").onSnapshot(d=>{if(d.exists){CFG=Object.assign(CFG,d.data());try{localStorage.setItem(CFG_KEY,JSON.stringify(CFG))}catch(e){}applyCFG()}},()=>{})}
+function applyCFG(){
+ // Header title & subtitle
+ const h1=document.querySelector("header h1"),sub=document.querySelector("header p");
+ if(h1)h1.textContent=CFG.name;
+ if(sub)sub.textContent=CFG.sub;
+ // Logo box
+ const lg=document.querySelector("header .lg");
+ if(lg){
+  if(CFG.logo){lg.style.background="transparent";lg.innerHTML=`<img src="${CFG.logo}" style="width:46px;height:46px;border-radius:13px;object-fit:cover">`;}
+  else{lg.style.background=CFG.color;lg.style.removeProperty("background-image");if(!CFG.logo)lg.innerHTML=I("building");}
+ }
+}
+function openCFG(){
+ $("cfg-n").value=CFG.name;
+ $("cfg-s").value=CFG.sub;
+ $("cfg-c").value=CFG.color;
+ const lp=$("cfg-lp"),li=$("cfg-li");
+ if(CFG.logo){lp.style.background="transparent";lp.innerHTML=`<img src="${CFG.logo}" style="width:52px;height:52px;border-radius:12px;object-fit:cover">`;}
+ else{lp.style.background=CFG.color;lp.innerHTML='<span id="cfg-li" style="color:#fff;font-size:22px">🏛️</span>';}
+ $("dc").showModal();
+}
+$("cfg").onclick=openCFG;
+$("cfg-lb").onclick=()=>$("cfg-lf").click();
+$("cfg-lf").onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>300000)return toast("La imagen es muy grande. Usa una de menos de 300 KB.",1);const r=new FileReader();r.onload=ev=>{const src=ev.target.result;$("cfg-lp").style.background="transparent";$("cfg-lp").innerHTML=`<img src="${src}" style="width:52px;height:52px;border-radius:12px;object-fit:cover">`;CFG.logo=src};r.readAsDataURL(f)};
+$("cfg-c").oninput=function(){$("cfg-lp").style.background=this.value;if(!CFG.logo)$("cfg-lp").style.background=this.value};
+$("cfg-x").onclick=()=>$("dc").close();
+$("cfg-r").onclick=()=>{CFG={name:"Gestión de Proyectos",sub:"Portafolio institucional de obras",logo:"",color:"#1d4ed8"};saveCFG();applyCFG();$("dc").close();toast("Configuración restablecida")};
+$("cfg-g").onclick=()=>{CFG.name=$("cfg-n").value.trim()||CFG.name;CFG.sub=$("cfg-s").value.trim()||CFG.sub;CFG.color=$("cfg-c").value;saveCFG();applyCFG();$("dc").close();toast("Configuración guardada ✓")};
+loadCFG();
+
+P=load();render();cloudInit();applyCFG();
 </script>
 </body>
 </html>
