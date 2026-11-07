@@ -113,7 +113,7 @@ td:nth-child(5){white-space:nowrap}
 <section class="k" id="k"></section>
 <section class="f">
  <div class="sb"><span data-i="search"></span><input id="q" type="search" placeholder="Buscar proyecto, código, supervisor o contratista…"></div>
- <select id="fr"></select><select id="fp"></select><select id="ftp"></select><select id="fs"></select><select id="fz"></select>
+ <select id="fr"></select><select id="fp"></select><select id="ftp"></select><select id="fs"></select>
  <button class="b" id="cl">Limpiar</button>
 </section>
 <section class="dn" id="dn"></section>
@@ -158,7 +158,7 @@ const TR=[[/DESTACAMENTO|POLIC|CUARTEL/,0],[/BOMBERO/,9],[/DEPORT|CANCHA|ESTADIO
 const inf=n=>{const u=nz(n).toUpperCase(),r=TR.find(r=>r[0].test(u));return r?TP[r[1]]:"Otra"};
 
 const KEY="gp_proyectos_v19",OLD="gp_proyectos_v18_master";
-let P=[],F={q:"",r:"",p:"",t:"",s:"",z:""},sk="n",sd=1,ed=null,PG=1,PS=25,SG="",LS=null,ERR=false,UN=null;
+let P=[],F={q:"",r:"",p:"",t:"",s:""},sk="n",sd=1,ed=null,PG=1,PS=25,SG="",LS=null,ERR=false,UN=null;
 const IC={plus:'<path d="M5 12h14M12 5v14"/>',upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',edit:'<path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',trash:'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',cash:'<rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',building:'<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/>'};
 const I=n=>'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
 const hoy=()=>{const d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)};
@@ -222,7 +222,6 @@ function fill(){
  $("fp").innerHTML='<option value="">Todas las provincias</option>'+g;$("p").innerHTML=g;
  $("ftp").innerHTML=opts(TP,"Todos los tipos");$("t").innerHTML=opts(TP);
  $("fs").innerHTML=opts(ST,"Todos los estatus");$("s").innerHTML=opts(ST);
- $("fz").innerHTML='<option value="">Todo el cronograma</option><option value="at">Atrasados</option><option value="pv">Vencen en 30 días</option><option value="nd">Sin fecha</option>';
 }
 function dn(it,ct,sub,f){
  const t=it.reduce((s,x)=>s+x.v,0),C=2*Math.PI*54;let o=0,s='<svg viewBox="0 0 140 140" width="150" height="150" role="img" aria-label="'+sub+'"><circle cx="70" cy="70" r="54" fill="none" stroke="var(--bar)" stroke-width="20"/>';
@@ -241,7 +240,7 @@ function dash(G,L){
  $("dn").innerHTML='<div class="c"><h3>Top 5 provincias por presupuesto</h3>'+dn(tp,T?(T/1e6).toFixed(1)+" M":"0","RD$",v=>(v/1e6).toFixed(1)+" M")+'</div><div class="c"><h3>Proyectos por tipo de obra</h3>'+dn(tl,L.length,"proyectos",v=>v)+'</div><div class="c"><h3>Proyectos por estatus</h3>'+dn(sl,L.length,"proyectos",v=>v)+'</div>';
 }
 function match(x,skipP){const t=nz([x.n,x.u,x.c,x.p,x.v,x.ct,x.o,x.t].join(" "));
- return(!F.q||t.indexOf(nz(F.q))>-1)&&(!F.r||R2[x.p]===F.r)&&(!F.s||x.s===F.s)&&(!F.t||x.t===F.t)&&(!F.z||cr(x).k===F.z)&&(skipP||!F.p||x.p===F.p)}
+ return(!F.q||t.indexOf(nz(F.q))>-1)&&(!F.r||R2[x.p]===F.r)&&(!F.s||x.s===F.s)&&(!F.t||x.t===F.t)&&(skipP||!F.p||x.p===F.p)}
 
 function render(){
  const sg=JSON.stringify(F);if(sg!==SG){SG=sg;PG=1}const L=P.filter(x=>match(x));
@@ -314,8 +313,8 @@ document.addEventListener("click",e=>{
  render()});
 $("q").oninput=function(){F.q=this.value;render()};
 $("fr").onchange=function(){F.r=this.value;if(F.p&&F.r&&R2[F.p]!==F.r){F.p="";$("fp").value=""}render()};
-[["fp","p"],["ftp","t"],["fs","s"],["fz","z"]].forEach(a=>$(a[0]).onchange=function(){F[a[1]]=this.value;render()});
-$("cl").onclick=()=>{F={q:"",r:"",p:"",t:"",s:"",z:""};["q","fr","fp","ftp","fs","fz"].forEach(i=>$(i).value="");render()};
+[["fp","p"],["ftp","t"],["fs","s"]].forEach(a=>$(a[0]).onchange=function(){F[a[1]]=this.value;render()});
+$("cl").onclick=()=>{F={q:"",r:"",p:"",t:"",s:""};["q","fr","fp","ftp","fs"].forEach(i=>$(i).value="");render()};
 
 function dl(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
 $("xp").onclick=()=>{if(!window.XLSX)return toast("No se pudo cargar el generador de Excel.",1);
@@ -339,7 +338,7 @@ function informe(){
  const donut=it=>{const t=it.reduce((a,x)=>a+x.v,0)||1,C=2*Math.PI*45;let o=0,r='<svg viewBox="0 0 120 120" width="130" height="130"><circle cx="60" cy="60" r="45" fill="none" stroke="#e5e7eb" stroke-width="18"/>';it.forEach(x=>{const d=x.v/t*C;r+=`<circle cx="60" cy="60" r="45" fill="none" stroke="${x.c}" stroke-width="18" stroke-dasharray="${d} ${C-d}" stroke-dashoffset="${-o}" transform="rotate(-90 60 60)"/>`;o+=d});return r+`<text x="60" y="65" text-anchor="middle" font-size="18" font-weight="700">${L.length}</text></svg>`};
  const leg=it=>it.map(x=>`<div class="lg"><i style="background:${x.c}"></i><span>${esc(x.l)}</span><b>${x.v}</b></div>`).join("");
  const bars=(it,f)=>{const m=Math.max(...it.map(x=>x.v),1);return it.map(x=>`<div class="br"><span>${esc(x.l)}</span><div class="bt"><i style="width:${x.v/m*100}%;background:${x.c}"></i></div><b>${f(x.v)}</b></div>`).join("")};
- const zt={at:"Atrasados",pv:"Vencen en 30 días",nd:"Sin fecha"},fl=[F.q&&"Búsqueda: «"+F.q+"»",F.r&&"Región: "+F.r,F.p&&"Provincia: "+F.p,F.t&&"Tipo: "+F.t,F.s&&"Estatus: "+F.s,F.z&&"Cronograma: "+zt[F.z]].filter(Boolean);
+ const fl=[F.q&&"Búsqueda: «"+F.q+"»",F.r&&"Región: "+F.r,F.p&&"Provincia: "+F.p,F.t&&"Tipo: "+F.t,F.s&&"Estatus: "+F.s].filter(Boolean);
  const rg=Object.keys(REG),S=L.slice().sort((x,y)=>rg.indexOf(R2[x.p])-rg.indexOf(R2[y.p])||x.p.localeCompare(y.p,"es")||x.n.localeCompare(y.n,"es"));
  let rows="",cur=null;S.forEach(x=>{if(x.p!==cur){cur=x.p;const g=S.filter(y=>y.p===cur);rows+=`<tr class="gh"><td colspan="9">${esc(R2[cur]||"")} › ${esc(cur)} <span>${g.length} proyecto(s) · ${rd(g.reduce((t,y)=>t+y.b,0))}</span></td></tr>`}
   const z=cr(x);rows+=`<tr><td>${esc(x.c||"—")}</td><td><b>${esc(x.n)}</b>${x.v?`<small>Supervisor: ${esc(x.v)}</small>`:""}</td><td>${esc(x.t)}</td><td class="r">${rd(x.b)}</td><td class="r">${rd(x.ej)}</td><td>${fdt(x.di)}</td><td>${x.a}%<div class="pb"><i style="width:${x.a}%"></i></div></td><td style="color:${SC[x.s]};font-weight:700">${x.s}</td><td class="z${z.k}">${z.t||"—"}</td></tr>`});
