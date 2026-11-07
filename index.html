@@ -114,7 +114,7 @@ body.ro #nw,body.ro #btnApply,body.ro #im,body.ro #rs,body.ro #up,body.ro #da,bo
 <input type="file" id="fi" accept=".xlsx,.xls,.csv" hidden><input type="file" id="fj" accept=".json" hidden>
 <section class="k" id="k"></section>
 <section class="f">
- <div class="sb"><span data-i="search"></span><input id="q" type="search" placeholder="Buscar proyecto, código, supervisor o contratista…"></div>
+ <div class="sb"><span data-i="search"></span><input id="q" type="search" placeholder="Buscar proyecto, SNIP, contratista…"></div>
  <select id="fr"></select><select id="fp"></select><select id="ftp"></select><select id="fs"></select>
  <button class="b" id="cl">Limpiar</button>
 </section>
@@ -144,9 +144,9 @@ body.ro #nw,body.ro #btnApply,body.ro #im,body.ro #rs,body.ro #up,body.ro #da,bo
  <h3 style="margin:0 0 4px;font-size:17px">⚙️ Configuración institucional</h3>
  <p style="color:var(--mu);font-size:13px;margin:0 0 16px">Esta información se guarda en la nube y la ven todos los usuarios.</p>
  <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:3px">Nombre de la institución</label>
- <input id="cfg-n" placeholder="Ej: Dirección de Desarrollo Provincial" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
+ <input id="cfg-n" placeholder="Ej: Nombre de la institución" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
  <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:3px">Subtítulo / descripción</label>
- <input id="cfg-s" placeholder="Ej: Portafolio institucional de obras · República Dominicana" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
+ <input id="cfg-s" placeholder="Ej: Portafolio institucional de obras" style="width:100%;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:9px 10px;margin-bottom:10px">
  <label style="display:block;font-size:12px;color:var(--mu);margin-bottom:6px">Logo de la institución <span style="font-weight:400">(PNG, JPG o SVG — se guarda en la nube)</span></label>
  <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px">
   <div id="cfg-lp" style="width:52px;height:52px;border-radius:12px;background:var(--pr);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none">
@@ -155,7 +155,7 @@ body.ro #nw,body.ro #btnApply,body.ro #im,body.ro #rs,body.ro #up,body.ro #da,bo
   <div style="flex:1">
    <button class="b" id="cfg-lb" style="width:100%;justify-content:center">Subir imagen del logo</button>
    <input type="file" id="cfg-lf" accept="image/*" hidden>
-   <p style="font-size:11px;color:var(--mu);margin:5px 0 0">Recomendado: imagen cuadrada, fondo transparente o de color. Máx 200 KB.</p>
+   <p style="font-size:11px;color:var(--mu);margin:5px 0 0">Recomendado: imagen cuadrada, fondo transparente o de color. Máx 300 KB.</p>
   </div>
  </div>
  <label style="display:block;font-size:12px;color:var(--mu);margin:10px 0 3px">Color principal (fondo del logo)</label>
@@ -243,7 +243,7 @@ function cr(x){
  if(!x.di||!x.d)return{k:"nd",t:"Sin fecha"};
  const f=new Date(x.di+"T00:00:00Z");f.setUTCDate(f.getUTCDate()+x.d);
  const d=dif(hoy(),f.toISOString().slice(0,10));
- return d<0?{k:"at",t:"Atrasado "+(-d)+" d"}:d<=30?{k:"pv",t:"Vence en "+d+" d"}:{k:"ok",t:"Faltan "+d+" d"};
+ return d<0?{k:"at",t:"Atrasado "+fd(-d)}:d===0?{k:"pv",t:"Vence hoy"}:d<=30?{k:"pv",t:"Vence en "+fd(d)}:{k:"ok",t:"Faltan "+fd(d)};
 }
 const TM={"Seguridad Ciudadana":"Proyectos Seguridad Ciudadana","Seguridad ciudadana":"Proyectos Seguridad Ciudadana","Comunitaria":"Proyectos Comunitarios","Eclesiástica":"Proyectos Eclesiásticos","Habitacional":"Proyectos Habitacionales","Deportiva":"Proyectos Deportivos","Vial":"Proyectos Viales","Comercial":"Proyectos Comerciales","Otra":"Otros"};
 const norm=x=>{x.t=TM[x.t]||x.t||inf(x.n);if(!TP.includes(x.t))x.t=inf(x.n);x.p=R2[x.p]?x.p:"Sin asignar";x.di=x.di||"";x.b=Math.round((+x.b||0)*100)/100;x.ej=Math.round((+x.ej||0)*100)/100;x.a=+x.a||0;x.d=+x.d||0;x.h=Array.isArray(x.h)?x.h:[];return x};
@@ -256,7 +256,7 @@ const FBC={apiKey:"AIzaSyADc21S2mCe-Oi4CPK7Y7Y3PywH2ABgDA4",authDomain:"gestion-
 const LB="gp_lastbk";
 function resolveRole(u){const ref=DB.collection("config").doc("acceso"),em=(u.email||"").toLowerCase();
  return ref.get().then(d=>{if(d.exists){RO=em!==String(d.data().admin||"").toLowerCase();return}
-  return ref.set({admin:em}).then(()=>{RO=false}).catch(()=>{RO=true})}).catch(e=>{RO=true;toast("No se pudo verificar tu rol ("+(e.code||e.message)+"). Publica en Firestore la regla de la colección config.",1)})}
+  return ref.set({admin:em}).then(()=>{RO=false}).catch(()=>{RO=true})}).catch(e=>{RO=true;toast("No se pudo verificar tu rol de usuario ("+(e.code||e.message)+"). Contacta al administrador del sistema.",1)})}
 function bkReminder(){try{const l=+localStorage.getItem(LB)||0;if(Date.now()-l>14*864e5)toast("Recuerda descargar un respaldo (Datos → Descargar respaldo). "+(l?"El último fue hace más de 14 días.":"Aún no has hecho ninguno."),1)}catch(e){}}
 let DB=null,CU=null,CL={},UNS=null,FIRST=true,RO=false,CFGU=null;
 let CE="";
@@ -275,7 +275,7 @@ function listen(){UNS=DB.collection("proyectos").onSnapshot(snap=>{
  if(FIRST){FIRST=false;if(snap.empty&&P.length&&!RO){ask("La nube está vacía","¿Subir los "+P.length+" proyectos guardados en este navegador a la base de datos compartida?",0,()=>save(),"Sí, subir");sync();return}}
  CL={};P=Object.keys(m).map(k=>{const o=norm(Object.assign({id:k},m[k]));CL[k]=JSON.stringify(o);return o});
  try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}LS=Date.now();render()},
- err=>{CE=err.code||"error";sync();toast(err.code==="permission-denied"?"Firestore rechazó el acceso: publica las reglas de seguridad.":"Sin conexión con la nube: "+CE,1)})}
+ err=>{CE=err.code||"error";sync();toast(err.code==="permission-denied"?"Acceso denegado por la base de datos. Contacta al administrador del sistema.":"Sin conexión con la nube: "+CE,1)})}
 function cloudInit(){
  if(typeof firebase==="undefined")return;
  try{firebase.initializeApp(FBC);DB=firebase.firestore();try{DB.enablePersistence({synchronizeTabs:true}).catch(()=>{})}catch(e){}
@@ -320,7 +320,7 @@ function render(){
  const cols=[["c","SNIP"],["n","Proyecto"],["t","Tipo de obra"],["p","Provincia"],["b","Presupuesto"],["di","Inicio"],["d","Duración"],["a","Avance"],["v","Supervisor"],["s","Estatus"]];
  L.sort((x,y)=>{let a=x[sk],b=y[sk];if(a==null)a="";if(b==null)b="";return(typeof a==="number"&&typeof b==="number"?a-b:String(a).localeCompare(String(b),"es",{numeric:true}))*sd});
  const inv=L.reduce((t,x)=>t+x.b,0),ejc=L.reduce((t,x)=>t+x.ej,0),av=inv?L.reduce((t,x)=>t+x.a*x.b,0)/inv:(L.length?L.reduce((t,x)=>t+x.a,0)/L.length:0),at=L.filter(x=>cr(x).k==="at").length;
- $("k").innerHTML=[["Proyectos mostrados",L.length+" de "+P.length,"folder"],["Presupuesto total",rd(inv),"building"],["Ejecutado",rd(ejc)+" ("+(inv?(ejc/inv*100).toFixed(0):0)+"%)","cash"],["Obras finalizadas",(f=>f+" de "+L.length+" ("+(L.length?(f/L.length*100).toFixed(0):0)+"%)")(L.filter(x=>x.s==="Finalizado").length),"check"],["Atrasados",at,"clock"]].map(k=>'<div class="c kc"><span class="ki">'+I(k[2])+'</span><span class="kt"><small>'+k[0]+'</small><b class="kv">'+k[1]+'</b></span></div>').join("");
+ $("k").innerHTML=[["Proyectos mostrados",L.length+" de "+P.length,"folder"],["Presupuesto total",rd(inv),"building"],["Monto ejecutado",rd(ejc)+" ("+(inv?(ejc/inv*100).toFixed(0):0)+"%)","cash"],["Proyectos finalizados",(f=>f+" de "+L.length+" ("+(L.length?(f/L.length*100).toFixed(0):0)+"%)")(L.filter(x=>x.s==="Finalizado").length),"check"],["Proyectos atrasados",at,"clock"]].map(k=>'<div class="c kc"><span class="ki">'+I(k[2])+'</span><span class="kt"><small>'+k[0]+'</small><b class="kv">'+k[1]+'</b></span></div>').join("");
  const G={};P.filter(x=>match(x,1)).forEach(x=>G[x.p]=(G[x.p]||0)+x.b);dash(G,L);
  $("th").innerHTML=cols.map(c=>'<th data-k="'+c[0]+'">'+c[1]+(sk===c[0]?(sd>0?" ▲":" ▼"):"")+'</th>').join("")+"<th></th>";
  const pn=Math.max(1,Math.ceil(L.length/PS));if(PG>pn)PG=pn;$("ct").textContent=L.length+" de "+P.length+" proyectos";
@@ -458,7 +458,7 @@ tbody td{padding:7px 10px;border-bottom:1px solid #e3e7ee;vertical-align:middle}
 <div class="cover">
  <div class="cover-left">
   <div class="logo-box"${CFG.logo?' style="background:transparent"':''}>${CFG.logo?'<img src="'+CFG.logo+'" style="width:52px;height:52px;border-radius:12px;object-fit:cover">':'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'}</div>
-  <div><div class="cover h1" style="font-size:22px;font-weight:700;color:#0f2d6b">Informe de Gestión de Proyectos</div><div style="color:#667085;font-size:12px;margin-top:3px">${esc(CFG.sub)}</div><div style="color:#94a3b8;font-size:11px;margin-top:2px">Dirección de Desarrollo Provincial</div></div>
+  <div><div class="cover h1" style="font-size:22px;font-weight:700;color:#0f2d6b">Informe de Gestión de Proyectos</div><div style="color:#667085;font-size:12px;margin-top:3px">${esc(CFG.sub)}</div><div style="color:#94a3b8;font-size:11px;margin-top:2px">${esc(CFG.name)}</div></div>
  </div>
  <div class="cover-right">Generado el<br><strong>${fh(Date.now())}</strong><br><span style="font-size:10px;color:#94a3b8">Sistema de Gestión de Proyectos</span></div>
 </div>
@@ -527,7 +527,7 @@ $("fi").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!window.XLSX)retu
     log(o,"Importado desde «"+f.name+"» (hoja "+sn+")");add.push(o)}});
   $("ld").style.display="none";
   const key=x=>x.c?"c:"+nz(x.c):"n:"+nz(x.n)+"|"+x.p,have=new Set(P.map(key)),nuevos=add.filter(x=>{const k=key(x);if(have.has(k))return false;have.add(k);return true});
-  if(!add.length)return toast("No se encontraron proyectos ("+wb.SheetNames.length+" hojas, "+seen+" filas leídas). Revisa que el Excel tenga los nombres de las obras en texto.",1);
+  if(!add.length)return toast("No se encontraron proyectos ("+wb.SheetNames.length+" hojas, "+seen+" filas leídas). Revisa que el Excel tenga los nombres de los proyectos en texto.",1);
   P=P.concat(nuevos);save();render();toast("Importados "+nuevos.length+" proyectos nuevos"+(add.length-nuevos.length?" · "+(add.length-nuevos.length)+" duplicados omitidos":"")+(skipped?" · "+skipped+" hoja(s) sin encabezado":""))
  }catch(err){$("ld").style.display="none";toast("Error al leer el Excel: "+err.message,1)}},60);
  fr.readAsArrayBuffer(f)};
